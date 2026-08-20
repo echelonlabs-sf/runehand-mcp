@@ -27,7 +27,7 @@
     "dev": "tsx src/index.ts",
     "test": "vitest run",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit -p tsconfig.test.json",
     "smoke": "node scripts/smoke-test.mjs"
   },
   "publishConfig": {
