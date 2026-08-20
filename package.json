@@ -2,7 +2,16 @@
   "name": "@runehand/mcp-server",
   "version": "0.1.0",
   "description": "MCP server that wraps the Runehand public API v1 as tools for AI agents.",
+  "license": "MIT",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/echelonlabs-sf/runehand-mcp.git"
+  },
+  "homepage": "https://github.com/echelonlabs-sf/runehand-mcp#readme",
+  "bugs": {
+    "url": "https://github.com/echelonlabs-sf/runehand-mcp/issues"
+  },
   "bin": {
     "runehand-mcp": "./dist/index.js"
   },

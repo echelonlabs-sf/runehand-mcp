@@ -1,8 +1,8 @@
 # @runehand/mcp-server
 
-MCP server that wraps the [Runehand public API v1](https://github.com/echelonlabs-sf/converso-app/blob/main/docs/api-v1.md)
-as tools, so an MCP client (Claude Desktop, Claude Code, etc.) can operate Runehand bots directly:
-list bots and flows, read and reply to conversations, manage leads, and check analytics.
+MCP server that wraps the Runehand public API v1 as tools, so an MCP client (Claude Desktop, Claude Code,
+etc.) can operate Runehand bots directly: list bots and flows, read and reply to conversations, manage
+leads, and check analytics.
 
 ## Setup
 
@@ -46,8 +46,35 @@ list bots and flows, read and reply to conversations, manage leads, and check an
 | `get_analytics` | Get workspace KPIs and quick stats for a date range. |
 
 Errors from the Runehand API surface as tool errors in the form `"{code}: {message}"` (e.g.
-`not_found: Not found.`) — see the [error codes table](https://github.com/echelonlabs-sf/converso-app/blob/main/docs/api-v1.md#formato-de-errores)
-in the API docs.
+`not_found: Not found.`) — see the error codes table below.
+
+## Errors
+
+All error responses from `/api/v1/*` use the same shape:
+
+```json
+{
+  "error": {
+    "code": "plan_upgrade_required",
+    "message": "Your current plan does not include API access.",
+    "details": {
+      "required_tiers": ["pro", "enterprise"]
+    }
+  }
+}
+```
+
+`details` is `null` when not applicable.
+
+| Code | HTTP | When |
+|---|---|---|
+| `unauthenticated` | 401 | Missing header, invalid/revoked/expired token |
+| `workspace_inactive` | 403 | Workspace is frozen or subscription lapsed |
+| `plan_upgrade_required` | 403 | Workspace's plan doesn't include API access |
+| `validation_failed` | 422 | Request data failed validation |
+| `not_found` | 404 | Resource doesn't exist or doesn't belong to the key's workspace |
+| `rate_limited` | 429 | Plan's requests-per-minute limit exceeded |
+| `server_error` | 500 | Unhandled internal error |
 
 ## Development
 
